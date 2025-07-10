@@ -20,18 +20,17 @@ public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
-
     private BCryptPasswordEncoder passwordEncoder;
 
     @InjectMocks
     private UserService userService;
 
     @BeforeEach
-    void setUp(){
-        MockitoAnnotations.openMocks(this);
-        passwordEncoder = new BCryptPasswordEncoder();
-        userService = new UserService(userRepository);
-    }
+    void setUp() {
+    MockitoAnnotations.openMocks(this);
+    passwordEncoder = new BCryptPasswordEncoder();
+    userService = new UserService(userRepository);
+}
 
     @Test 
     void testRegisterUser_passwordIsEncoded() {

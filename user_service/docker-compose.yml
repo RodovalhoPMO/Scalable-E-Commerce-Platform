@@ -33,5 +33,11 @@ services:
       SPRING_PROFILES_ACTIVE: docker
       JWT_SECRET: "ewogICAgImFsZyI6ICJIUzI1NiIsCiAgICAidHlwIjogIkpXVCIsCiAgICAia2lkIjogInVzZXItc2VydmljZS1rZXktMjAyNCIKfQ==.U2VjcmV0S2V5XzEyMzQ1Njc4OTBBQkNERUYhQCMkJV4mKigpXys9Liw7Ojs7"
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
 volumes:
   userdb-data:

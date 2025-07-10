@@ -25,19 +25,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Desativa CSRF para APIs REST
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/",
                     "/api/auth/**",
+                    "/api/users",
                     "/v3/api-docs/**",
                     "/swagger-ui/**",
                     "/swagger-resources/**"
-                ).permitAll() // Rotas públicas
-                .anyRequest().authenticated() // Todas as demais rotas exigem autenticação
+                ).permitAll() 
+                .anyRequest().authenticated() 
             )
             .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userDetailsService), 
-                           UsernamePasswordAuthenticationFilter.class); // Filtro JWT
+                           UsernamePasswordAuthenticationFilter.class); 
 
         return http.build();
     }
