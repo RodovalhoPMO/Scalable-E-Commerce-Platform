@@ -36,19 +36,20 @@
       this.userRepository = userRepository;
       this.passwordEncoder = passwordEncoder;
     }
-
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody AuthRequest request) {
-      try {
-        var authToken = new UsernamePasswordAuthenticationToken(request.email(), request.password());
+@PostMapping("/login")
+public ResponseEntity<?> login(@Valid @RequestBody AuthRequest request) {
+    try {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+            request.email(), 
+            request.password()
+        );
         authenticationManager.authenticate(authToken);
-
         String jwt = jwtUtil.generateToken(request.email());
         return ResponseEntity.ok(new AuthResponse(jwt));
-      } catch (AuthenticationException e) {
+    } catch (AuthenticationException e) {
         return ResponseEntity.status(401).body("Invalid credentials");
-      }
     }
+}
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {

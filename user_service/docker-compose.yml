@@ -33,6 +33,10 @@ services:
       SPRING_PROFILES_ACTIVE: docker
       JWT_SECRET: "ewogICAgImFsZyI6ICJIUzI1NiIsCiAgICAidHlwIjogIkpXVCIsCiAgICAia2lkIjogInVzZXItc2VydmljZS1rZXktMjAyNCIKfQ==.U2VjcmV0S2V5XzEyMzQ1Njc4OTBBQkNERUYhQCMkJV4mKigpXys9Liw7Ojs7"
 
+  grafana:
+    image: grafana/grafana
+    ports: ["3000:3000"]
+
   rabbitmq:
     image: rabbitmq:3-management
     ports:
