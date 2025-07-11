@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  product-db:
+    image: postgres:15
+    container_name: product-db
+    environment:
+      POSTGRES_DB: productdb
+      POSTGRES_USER: product
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    volumes:
+      - productdb-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U product -d productdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  product-service:
+    build: .
+    container_name: product-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      product-db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://product-db:5432/productdb
+      SPRING_DATASOURCE_USERNAME: product
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_PROFILES_ACTIVE: docker
+      JWT_SECRET: "ewogICAgImFsZyI6ICJIUzI1NiIsCiAgICAidHlwIjogIkpXVCIsCiAgICAia2lkIjogInVzZXItc2VydmljZS1rZXktMjAyNCIKfQ==.U2VjcmV0S2V5XzEyMzQ1Njc4OTBBQkNERUYhQCMkJV4mKigpXys9Liw7Ojs7"
+
+volumes:
+  productdb-data:
